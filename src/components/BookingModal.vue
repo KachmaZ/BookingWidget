@@ -2,12 +2,13 @@
   <div class="modal-wrapper" @click="emit('close')">
     <div class="modal" @click.stop>
       <h4 class="modal__title">Подтверждение бронирования</h4>
+      <hr />
+      <p>Дата: {{ selectedDate }}</p>
+      <p>Количество персон: {{ personsCount }}</p>
+      <hr />
       <div v-for="s in selected" :key="s.id">
         <p>{{ s.name }}: {{ s.timeStart }} — {{ s.timeEnd }} | {{ s.price }} ₽</p>
       </div>
-      <hr />
-
-      <p>Количество персон: {{ personsCount }}</p>
       <hr />
       <h3>ИТОГ: {{ selected.reduce((acc, s) => acc + Number(s.price), 0) }} ₽</h3>
       <input class="modal__input" v-model="name" placeholder="Ваше имя" required />
@@ -18,7 +19,7 @@
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';
-defineProps<{ selected: any[]; personsCount: number }>();
+defineProps<{ selected: any[]; personsCount: number; selectedDate: string }>();
 const emit = defineEmits<{
   (e: 'close'): void;
 }>();

@@ -10,6 +10,7 @@
     <BookingModal
       v-if="showModal"
       :personsCount="selectedPersonsCount"
+      :selected-date="selectedDate"
       :selected="selectedAppointments"
       @close="showModal = false"
     />
