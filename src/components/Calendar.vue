@@ -4,7 +4,7 @@
       v-model="model"
       :multi-calendars="2"
       :inline="true"
-      :format="'yyyy-MM-dd'"
+      :format="'dd.MM.yyyy'"
       :highlight="[]"
       :enable-time-picker="false"
       @update:model-value="onSelect"
@@ -22,9 +22,8 @@ const emit = defineEmits<{
   (e: 'select-date', date: string): void;
 }>();
 
-function onSelect(date: Date | string) {
-  const iso = typeof date === 'string' ? date : date.toISOString().split('T')[0];
-  emit('select-date', iso);
+function onSelect(date: Date) {
+  emit('select-date', new Intl.DateTimeFormat('ru-RU').format(date));
 }
 </script>
 

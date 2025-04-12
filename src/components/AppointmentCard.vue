@@ -1,10 +1,17 @@
 <template>
   <div
-    class="session-card"
-    :class="{ selected, unavailable: !appointment.available }"
+    class="appointment-card"
+    :class="[
+      selected ? 'selected' : '',
+      !appointment.available ? 'unavailable' : '',
+      `appointment-card--${size}`,
+    ]"
     @click="emit('select', appointment)"
   >
-    <h4 class="session-card__time">{{ appointment.timeStart }} - {{ appointment.timeEnd }}</h4>
+    <h4 class="appointment-card__time">
+      {{ size === 'big' ? 'Длительное бронирование' : '' }} {{ appointment.timeStart }} -
+      {{ appointment.timeEnd }}
+    </h4>
     <div>
       {{ appointment.name }} - {{ appointment.available ? `${appointment.price} ₽` : 'Недоступно' }}
     </div>
@@ -13,16 +20,14 @@
 <script lang="ts" setup>
 import type { Appointment } from '@/models';
 
-defineProps<{ appointment: Appointment; selected: boolean }>();
+defineProps<{ appointment: Appointment; selected: boolean; size: 'small' | 'big' }>();
 const emit = defineEmits<{
   (e: 'select', appointment: Appointment): void;
 }>();
 </script>
 
 <style scoped lang="scss">
-.session-card {
-  width: 230px;
-
+.appointment-card {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,6 +37,14 @@ const emit = defineEmits<{
   background: white;
   cursor: pointer;
   transition: 0.2s ease;
+
+  &--small {
+    width: 230px;
+  }
+
+  &--big {
+    width: 100%;
+  }
 
   &.unavailable {
     background: #eee;

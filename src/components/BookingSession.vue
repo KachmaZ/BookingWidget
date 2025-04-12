@@ -6,7 +6,8 @@
         v-for="appointment in sessionAppointments"
         :key="appointment.id"
         :appointment="appointment"
-        :selected="selectedAppointments.includes(appointment)"
+        :selected="selectedAppointments.some((selected) => selected.id === appointment.id)"
+        size="small"
         @select="(appointment) => emit('select', appointment)"
       />
     </div>
